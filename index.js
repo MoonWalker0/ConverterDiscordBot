@@ -16,8 +16,6 @@ client.on('message', msg => {
         }
         else
         {
-            msg.channel.send("TESTY.");
-            /*
             request.get(msg.attachments.first().attachment, function (error, response, body) 
             {
                 if (!error && response.statusCode == 200) 
@@ -34,7 +32,7 @@ client.on('message', msg => {
                     } 
                     msg.channel.send(participantsString); 
                 }
-            });  */
+            });  
         }
     } 
  });
