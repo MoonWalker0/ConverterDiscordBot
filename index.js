@@ -10,24 +10,31 @@ client.on('ready', () => {
 client.on('message', msg => {  
     if(msg.author.username != "ConverterBot")
     {
-        request.get(msg.attachments.first().attachment, function (error, response, body) 
+        if(msg.attachments.first() == null)
         {
-            if (!error && response.statusCode == 200) 
+            msg.channel.send("Na razie rozumiem tylko JSONy z GEMa.");
+        }
+        else
+        {
+            request.get(msg.attachments.first().attachment, function (error, response, body) 
             {
-                var participants = JSON.parse(body)["data"]["entityGroupMap"]["Participant:#"]["entities"]; 
+                if (!error && response.statusCode == 200) 
+                {
+                    var participants = JSON.parse(body)["data"]["entityGroupMap"]["Participant:#"]["entities"]; 
 
-                var participantsString = "";
-                for(var i = 0 ; i < participants.length ; i ++)
-                {   
-                    participantsString += (i + 1).toString() + ". ";
-                    participantsString += participants[`${i}`]["username"];
-                    participantsString += "\n";
-                    //console.log(participants[`${i}`]["username"]);
-                } 
-                msg.channel.send(participantsString); 
-            }
-        });  
+                    var participantsString = "";
+                    for(var i = 0 ; i < participants.length ; i ++)
+                    {   
+                        participantsString += (i + 1).toString() + ". ";
+                        participantsString += participants[`${i}`]["username"];
+                        participantsString += "\n";
+                        //console.log(participants[`${i}`]["username"]);
+                    } 
+                    msg.channel.send(participantsString); 
+                }
+            });  
+        }
     } 
  });
 
-client.login('NzAwNzEyMTg0OTE2NzM4MDY5.XpnPsw.j-J01qP1k21bScoQERyURfuFQzY');
+client.login('NzAwNzEyMTg0OTE2NzM4MDY5.XptJJQ.IhklcKm5tUTJJ5OJgypjdZAHGEU');
