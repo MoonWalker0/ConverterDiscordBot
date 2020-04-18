@@ -26,7 +26,7 @@ client.on('message', msg => {
                     for(var i = 0 ; i < participants.length ; i ++)
                     {   
                         participantsString += (i + 1).toString() + ". ";
-                        participantsString += participants[`${i}`]["username"];
+                        participantsString += participants[`${i}`]["first_name"];
                         participantsString += "\n";
                         //console.log(participants[`${i}`]["username"]);
                     } 
