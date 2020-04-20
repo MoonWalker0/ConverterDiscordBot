@@ -10,13 +10,26 @@ module.exports = {
                          "2 - Pobierz listę uczestników i talii.\n" +
                          "~~3 - Pobierz listę parringów.~~\n");
     },
+    stepTwo: function (msg)
+    {
+        msg.channel.send("Gdzie skierować wynik?\n"+
+                         "Podaj ID kanału lub 0, aby wypisać tutaj.");
+    },
     knownItem: function(msg)
     {
-        msg.channel.send("Zrozumiałem! Poproszę o plik z JSONem.");
+        msg.channel.send("Zrozumiałem!");
+    },
+    giveJSON: function(msg)
+    {
+        msg.channel.send("Proszę o plik z JSONem.");
     },
     unknownItem: function(msg)
     {
-        msg.channel.send("Odpowiedź poza kolejnością lub niezrozumiana.")
+        msg.channel.send("Odpowiedź poza kolejnością lub niezrozumiana.");
+    },
+    idError: function(msg)
+    {
+        msg.channel.send("ID musi zawierać tylko cyfry.");
     },
     jsonError: function(msg)
     {

@@ -1,6 +1,6 @@
 const request = require('request');
 module.exports = {
-    requestUsername: function (msg, collected) 
+    requestUsername: function (msg, collected, client, channel) 
     { 
         var messages = require('./menu_printing');
         request.get(collected.first().attachments.first().attachment, function (error, response, body) 
@@ -25,7 +25,15 @@ module.exports = {
                     tableData.push([(i+1).toString(), participants[`${i}`]["first_name"]]); 
                 } 
                 var arrayHandler = require('./table_handler');
-                msg.channel.send(arrayHandler.buildTable(tableData, participants.length, 2));
+
+                if(channel == "0")
+                {
+                    msg.channel.send(arrayHandler.buildTable(tableData, participants.length, 2));
+                }
+                else
+                {
+                    client.channels.cache.get(channel).send(arrayHandler.buildTable(tableData, participants.length, 2));
+                }
  
             }
             else
@@ -34,7 +42,7 @@ module.exports = {
             }
         }); 
     },
-    requestUsernameAndDeck: function (msg, collected)
+    requestUsernameAndDeck: function (msg, collected, client, channel)
     {
         var messages = require('./menu_printing');
         request.get(collected.first().attachments.first().attachment, function (error, response, body) 
@@ -60,7 +68,15 @@ module.exports = {
                     tableData.push([(i+1).toString(), participants[`${i}`]["first_name"], decks[`${i}`]["name"]]); 
                 } 
                 var arrayHandler = require('./table_handler');
-                msg.channel.send(arrayHandler.buildTable(tableData, participants.length, 3));
+
+                if(channel == "0")
+                {                    
+                    msg.channel.send(arrayHandler.buildTable(tableData, participants.length, 3));
+                }
+                else
+                {
+                    client.channels.cache.get(channel).send(arrayHandler.buildTable(tableData, participants.length, 3));
+                }
  
             }
             else

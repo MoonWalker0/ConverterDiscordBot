@@ -26,6 +26,7 @@ client.on('message', async msg => {
             messages.stepOne(msg);
 
             var option;
+            var selectedChannel;
                         
             //Get first response
             var response = await msg.channel.awaitMessages(filter, {max: 1, time: timeout})
@@ -51,6 +52,31 @@ client.on('message', async msg => {
                         return;
                     } 
                     messages.knownItem(msg);
+                    messages.stepTwo(msg);
+                });
+
+            //Get second response
+            response = await msg.channel.awaitMessages(filter, {max: 1, time: timeout})
+                .then((collected) => 
+                {
+                    if(!carryOn)
+                    {
+                        return;
+                    }
+                    
+                    //Timeout handling
+                    if(collected.first() == null)
+                    {
+                        messages.timeout(msg); 
+                        carryOn = false;
+                        return;
+                    }
+
+                    //Check response
+                    selectedChannel = collected.first().toString(); 
+                    
+                    messages.knownItem(msg);
+                    messages.giveJSON(msg);
                 });
     
             //Await JSON
@@ -65,39 +91,16 @@ client.on('message', async msg => {
                 
                 if(option == "1")
                 {
-                    handler.requestUsername(msg, collected);
+                    handler.requestUsername(msg, collected, client, selectedChannel);
                 }
                 else if(option == "2")
                 {
-                    handler.requestUsernameAndDeck(msg, collected);
+                    handler.requestUsernameAndDeck(msg, collected, client, selectedChannel);
                 }
                 messages.end(msg);
             });
  
-        }
-        //}
-        /*
-        else
-        {   
-            msg.channel.send(msg.content);
-            request.get(msg.attachments.first().attachment, function (error, response, body) 
-            {
-                if (!error && response.statusCode == 200) 
-                {
-                    var participants = JSON.parse(body)["data"]["entityGroupMap"]["Participant:#"]["entities"]; 
-
-                    var participantsString = "";
-                    for(var i = 0 ; i < participants.length ; i ++)
-                    {   
-                        participantsString += (i + 1).toString() + ". ";
-                        participantsString += participants[`${i}`]["first_name"];
-                        participantsString += "\n";
-                        //console.log(participants[`${i}`]["username"]);
-                    } 
-                    msg.channel.send(participantsString); 
-                }
-            });  
-        }*/
+        }            
     } 
  });
 
