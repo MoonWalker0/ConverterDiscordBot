@@ -97,6 +97,10 @@ client.on('message', async msg => {
                 {
                     handler.requestUsernameAndDeck(msg, collected, client, selectedChannel);
                 }
+                else if(option == "3")
+                {
+                    handler.requestParings(msg, collected, client, selectedChannel);
+                }
                 messages.end(msg);
             });
  
