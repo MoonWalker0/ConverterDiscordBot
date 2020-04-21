@@ -148,12 +148,12 @@ module.exports = {
                             if(participantsArr[j][0] == matches[`${i}`]["participant_pk"])
                             {
                                 tempGracz1 = participantsArr[j][1];
-                                tempScore1 = participantsArr[j][2].toString() + ":" + Math.abs(participantsArr[j][2] - currentRound).toString();
+                                tempScore1 = participantsArr[j][2].toString() + ":" + Math.abs(participantsArr[j][2] - currentRound + 1).toString();
                             }
                             if(participantsArr[j][0] == matches[`${i+1}`]["participant_pk"])
                             {
                                 tempGracz2 = participantsArr[j][1];
-                                tempScore2 = participantsArr[j][2] + ":" + Math.abs(participantsArr[j][2] - currentRound).toString();
+                                tempScore2 = participantsArr[j][2] + ":" + Math.abs(participantsArr[j][2] - currentRound + 1).toString();
                             }
                         }
 
