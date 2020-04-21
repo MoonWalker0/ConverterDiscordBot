@@ -8,7 +8,7 @@ module.exports = {
         msg.channel.send("Co robimy? Możliwe opcje:");
         msg.channel.send("1 - Pobierz listę uczesntików.\n" +
                          "2 - Pobierz listę uczestników i talii.\n" +
-                         "~~3 - Pobierz listę parringów.~~\n");
+                         "3 - Pobierz listę paringów.\n");
     },
     stepTwo: function (msg)
     {
