@@ -15,6 +15,10 @@ module.exports = {
         msg.channel.send("Gdzie skierować wynik?\n"+
                          "Podaj ID kanału lub 0, aby wypisać tutaj.");
     },
+    noDecks: function(msg)
+    {
+        msg.channel.send("Brak talii do pokazania.");
+    },
     knownItem: function(msg)
     {
         msg.channel.send("Zrozumiałem!");
@@ -33,7 +37,7 @@ module.exports = {
     },
     jsonError: function(msg)
     {
-        msg.channel.send("Niepoprawny plik JSON.");
+        msg.channel.send("Niepoprawny plik JSON lub jego brak.");
     },
     requestError: function(msg)
     {
