@@ -9,8 +9,8 @@ client.on('ready', () =>
 });
 
 client.on('message', async msg => {  
-    if(msg.author.username != "ConverterBot")
-    { 
+    if(msg.author.username != "ConverterBot" && msg.channel.type == "dm")
+    {  
         var messages = require('./menu_printing');
         var carryOn = true;
 
