@@ -13,7 +13,9 @@ module.exports = {
     stepTwo: function (msg)
     {
         msg.channel.send("Gdzie skierować wynik?\n"+
-                         "Podaj ID kanału lub 0, aby wypisać tutaj.");
+                         "Podaj ID kanału lub 0, aby wypisać tutaj.\n\n"+
+                         "Aby pobrać ID kanału należy wejść w [Ustawienia] -> [Wygląd] -> [Tryb Dewelopera].\n"+
+                         "Następnie prawym przyciskiem myszy na kanale i wybrać [Kopiuj ID]");
     },
     noDecks: function(msg)
     {
