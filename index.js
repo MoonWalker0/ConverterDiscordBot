@@ -13,96 +13,63 @@ client.on('message', async msg => {
     {  
         var messages = require('./menu_printing');
         var carryOn = true;
-
+        
         if(msg.content == "!help")
         {
-            messages.help(msg);
+            messages.fullHelp(msg);
         }
-        else if(msg.content == "!start")
-        { 
-            const filter = response => {return response.author.id === msg.author.id;}
-           
-            messages.startMenu(msg); 
-            messages.stepOne(msg);
+        else if(msg.content.startsWith("!start"))
+        {  
+            console.log(msg.attachments);
+            console.log(msg.attachments.first().attachment);
 
-            var option;
-            var selectedChannel;
-                        
-            //Get first response
-            var response = await msg.channel.awaitMessages(filter, {max: 1, time: timeout})
-                .then((collected) => 
-                {
-                    //Timeout handling
-                    if(collected.first() == null)
-                    {
-                        messages.timeout(msg); 
-                        carryOn = false;
-                        return;
-                    }
+            console.log(msg.content);
+            var split = msg.content.split(' ');
 
-                    //Check response
-                    option = collected.first().toString();
-                    if(option != "1" &&
-                       option != "2" &&
-                       option != "3")
-                    {
-                        messages.unknownItem(msg); 
-                        messages.end(msg);
-                        carryOn = false;
-                        return;
-                    } 
-                    messages.knownItem(msg);
-                    messages.stepTwo(msg);
-                });
-
-            //Get second response
-            response = await msg.channel.awaitMessages(filter, {max: 1, time: timeout})
-                .then((collected) => 
-                {
-                    if(!carryOn)
-                    {
-                        return;
-                    }
-                    
-                    //Timeout handling
-                    if(collected.first() == null)
-                    {
-                        messages.timeout(msg); 
-                        carryOn = false;
-                        return;
-                    }
-
-                    //Check response
-                    selectedChannel = collected.first().toString(); 
-                    
-                    messages.knownItem(msg);
-                    messages.giveJSON(msg);
-                });
-    
-            //Await JSON
-            var handler = require('./json_handler');
-            response = await msg.channel.awaitMessages(filter, {max: 1, time: timeout})
-            .then((collected) => 
-            { 
-                if(!carryOn)
-                {
-                    return;
-                }
-                
-                if(option == "1")
-                {
-                    handler.requestUsername(msg, collected, client, selectedChannel);
-                }
-                else if(option == "2")
-                {
-                    handler.requestUsernameAndDeck(msg, collected, client, selectedChannel);
-                }
-                else if(option == "3")
-                {
-                    handler.requestParings(msg, collected, client, selectedChannel);
-                }
+            //Safety checks
+            if(split.length != 3)
+            {
+                messages.messageSizeError(msg);
                 messages.end(msg);
-            });
+                return;
+            }
+
+            console.log(split[0]);
+            console.log(split[1]);
+            console.log(split[2]);
+            var option = split[1];
+            var selectedChannel = split[2];
+
+            var letterNumber = /^[0-9a-zA-Z]+$/;
+            if(!option.match(/^[0-9]+$/) || !selectedChannel.match(/^[0-9]+$/))
+            {
+                messages.notNumberError(msg);
+                messages.end(msg);
+                return;
+            } 
+
+            var handler = require('./json_handler');
+            if(option == "1")
+            {
+                handler.requestUsername(msg, client, selectedChannel);
+            }
+            else if(option == "2")
+            {
+                handler.requestUsernameAndDeck(msg, client, selectedChannel);
+            }
+            else if(option == "3")
+            {
+                handler.requestParings(msg, client, selectedChannel);
+            }
+            else
+            {
+                messages.unknownItem(msg); 
+                messages.end(msg); 
+                return;
+
+            }
+
+            messages.end(msg); 
  
         }            
     } 

@@ -1,4 +1,35 @@
 module.exports = {
+    fullHelp : function (msg)
+    {
+        msg.channel.send(
+                         "Bot pozwala na wygenerowanie różnych tabel z danymi z plików JSON (folder Backup) z systemu GEM.\n\n"+
+                         "Bota używa się poprzez przesłanie załacznika z odpowiednim opisem/komentarzem:\n"+     
+                         "```!start OPCJA ID_KANAŁU```\n" + 
+                        
+                         "Aktualnie dostępne wartości OPCJA:\n" +
+                         "1 - Pobierz listę uczestników.\n" +
+                         "2 - Pobierz listę uczestników i talii.\n" +
+                         "3 - Pobierz listę paringów.\n\n"+
+                        
+                         "ID_KANAŁU równe 0 powoduje wypisanie odpowiedzi w tym miejscu. Inna wartość skieruje wiadomość do wskazanego kanału.\n"+
+                         "Aby pobrać ID kanału należy wejść w [Ustawienia] -> [Wygląd] -> [Tryb Dewelopera].\n"+
+                         "Następnie prawym przyciskiem myszy kliknąć na wybranym kanale i wybrać [Kopiuj ID]\n\n" +
+
+                         "Przykład:\n"+
+                         "Załącznik przesłany z komentarzem ```!start 1 0``` spowoduje wygenerowanie listy uczestników turnieju w aktualnym oknie czatu.\n\n"+
+                         "Załącznik przesłany z komentarzem ```!start 3 123``` spowoduje przesłanie aktualnych paringów do kanału o ID równym 123. \n\n"+
+
+                         "Uwaga - jeżeli wiadomości nie pojawiają się na wskazanym kanale należy sprawdzić czy jest nadana tam rola ```ConverterBot``` z możliwościa pisania wiadomości."
+                         );
+    },
+    messageSizeError: function(msg)
+    {
+        msg.channel.send("Niepoprawnie zbudowana komenda. Sprawdź składnie poprzez ```!help```")
+    },
+    notNumberError: function(msg)
+    {
+        msg.channel.send("Wprowadzone dane powinny być liczbami.");
+    },
     startMenu: function (msg) 
     {
         msg.channel.send("Proces uruchomiony!");   
@@ -31,7 +62,7 @@ module.exports = {
     },
     unknownItem: function(msg)
     {
-        msg.channel.send("Odpowiedź poza kolejnością lub niezrozumiana.");
+        msg.channel.send("OPCJA nierozpoznana.");
     },
     idError: function(msg)
     {

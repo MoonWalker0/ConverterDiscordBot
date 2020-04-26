@@ -1,11 +1,11 @@
 const request = require('request');
 module.exports = {
-    requestUsername: function (msg, collected, client, channel) 
+    requestUsername: function (msg, client, channel) 
     { 
         var messages = require('./menu_printing');
         try
         {
-            request.get(collected.first().attachments.first().attachment, function (error, response, body) 
+            request.get(msg.attachments.first().attachment, function (error, response, body) 
             {
                 if (!error && response.statusCode == 200) 
                 { 
@@ -50,12 +50,12 @@ module.exports = {
         }
     },
 
-    requestUsernameAndDeck: function (msg, collected, client, channel)
+    requestUsernameAndDeck: function (msg, client, channel)
     {
         var messages = require('./menu_printing');
         try
         {
-            request.get(collected.first().attachments.first().attachment, function (error, response, body) 
+            request.get(msg.attachments.first().attachment, function (error, response, body) 
             {
                 if (!error && response.statusCode == 200) 
                 { 
@@ -109,12 +109,12 @@ module.exports = {
         }
     },
 
-    requestParings: function (msg, collected, client, channel) 
+    requestParings: function (msg, client, channel) 
     { 
         var messages = require('./menu_printing');
         try
         {
-            request.get(collected.first().attachments.first().attachment, function (error, response, body) 
+            request.get(msg.attachments.first().attachment, function (error, response, body) 
             {
                 if (!error && response.statusCode == 200) 
                 { 
