@@ -3,42 +3,74 @@ module.exports = {
     { 
         var maxLength = this.getMaxLength(arr, length, width);
        
-        var result = "```"; 
-        result += this.drawTop(width, maxLength); 
-        result += this.drawHeaders(width, arr[0], maxLength); 
-        result += this.drawMid(width, maxLength); 
-        result += this.drawContent(width, length, maxLength, arr);
-        result += this.drawBot(width, maxLength);
-        result += "```";
-        
-        console.log(result);
-        return result;
-    },
-
-    drawContent: function(width, length, maxLength, arr)
-    {
-        var result = "";
+        var resultArray = [];
+        var result;
+        var restart = true;
+        //Protection against too long message
         //[0] are for headers
         for(var i = 1 ; i < length; i++)
         {
-            result += "║";
-            for(var j = 0 ; j < width ; j++)
-            {
-                result += arr[i][j];
-                if(arr[i][j].length < maxLength[j])
-                { 
-                    //Add spaces
-                    result += new Array(maxLength[j] - arr[i][j].length + 1).join(' '); 
-                }
-                result += "║";
-            } 
-            result += "\n";
-
-            if(length - 1 != i)
-            {
+            if(restart == true)
+            {                
+                result = "```"; 
+                result += this.drawTop(width, maxLength); 
+                result += this.drawHeaders(width, arr[0], maxLength); 
                 result += this.drawMid(width, maxLength); 
+                restart = false;
+            }
+
+            result += this.drawContent(width, i, maxLength, arr);
+
+            //The margin is 2000 but lets be cautious
+            if(result.length > 1500)
+            {
+                restart = true;
+                result += this.drawBot(width, maxLength);
+                result += "```";
+                resultArray.push(result);
+                
+                result = "";
+            }
+            else
+            {
+                if(length - 1 != i)
+                {
+                    result += this.drawMid(width, maxLength); 
+                } 
             }
         }
+
+        if(restart != true)
+        {
+            result += this.drawBot(width, maxLength);
+            result += "```";
+            resultArray.push(result);
+        }
+        
+        for(var i = 0 ; i < resultArray.length ; i ++)
+        {
+            console.log(resultArray[i]); 
+        }
+
+        return resultArray;
+    },
+
+    drawContent: function(width, i, maxLength, arr)
+    {
+        var result = "";
+        //[0] are for headers 
+        result += "║";
+        for(var j = 0 ; j < width ; j++)
+        {
+            result += arr[i][j];
+            if(arr[i][j].toString().length < maxLength[j])
+            { 
+                //Add spaces
+                result += new Array(maxLength[j] - arr[i][j].toString().length + 1).join(' '); 
+            }
+            result += "║";
+        } 
+        result += "\n";
         return result;
     },
 
@@ -111,13 +143,18 @@ module.exports = {
         {
             for (var j = 0 ; j < width ; j ++)
             {
-                var tempLength = arr[i][j].length;
+                var tempLength = arr[i][j].toString().length;
                 if(maxLength[j] < tempLength)
                 {
                     maxLength[j] = tempLength;
                 }
             }
         }
+
+        for( var i = 0 ; i < length ; i ++)
+        {
+            console.log(maxLength[i]);
+        }        
 
         return maxLength;
     }

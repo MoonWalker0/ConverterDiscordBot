@@ -19,24 +19,18 @@ client.on('message', async msg => {
             messages.fullHelp(msg);
         }
         else if(msg.content.startsWith("!start"))
-        {  
-            console.log(msg.attachments);
-            console.log(msg.attachments.first().attachment);
-
-            console.log(msg.content);
+        {   
             var split = msg.content.split(' ');
 
             //Safety checks
+            //Format "!start OPTION CHANNEL_ID"
             if(split.length != 3)
             {
                 messages.messageSizeError(msg);
                 messages.end(msg);
                 return;
-            }
+            } 
 
-            console.log(split[0]);
-            console.log(split[1]);
-            console.log(split[2]);
             var option = split[1];
             var selectedChannel = split[2];
 
@@ -61,6 +55,10 @@ client.on('message', async msg => {
             {
                 handler.requestParings(msg, client, selectedChannel);
             }
+            else if(option == "4")
+            {
+                handler.requestTopScores(msg, client, selectedChannel);
+            }
             else
             {
                 messages.unknownItem(msg); 
@@ -75,4 +73,5 @@ client.on('message', async msg => {
     } 
  });
 
-client.login(process.env.BOT_TOKEN);
+//client.login(process.env.BOT_TOKEN);
+client.login("NzAwNzEyMTg0OTE2NzM4MDY5.XqPiWA.7_K3cBlQJQEdF3E0V8_Wi-fPDf0");
