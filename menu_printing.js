@@ -9,7 +9,8 @@ module.exports = {
                          "Aktualnie dostępne wartości OPCJA:\n" +
                          "1 - Pobierz listę uczestników.\n" +
                          "2 - Pobierz listę uczestników i talii.\n" +
-                         "3 - Pobierz listę paringów.\n\n"+
+                         "3 - Pobierz listę paringów.\n"+
+                         "4 - Pobierz statystyki graczy (wynik/SOS/ESOS).\n\n" +
                         
                          "ID_KANAŁU równe 0 powoduje wypisanie odpowiedzi w tym miejscu. Inna wartość skieruje wiadomość do wskazanego kanału.\n"+
                          "Aby pobrać ID kanału należy wejść w [Ustawienia] -> [Wygląd] -> [Tryb Dewelopera].\n"+
@@ -39,7 +40,8 @@ module.exports = {
         msg.channel.send("Co robimy? Możliwe opcje:");
         msg.channel.send("1 - Pobierz listę uczesntików.\n" +
                          "2 - Pobierz listę uczestników i talii.\n" +
-                         "3 - Pobierz listę paringów.\n");
+                         "3 - Pobierz listę paringów\n" +
+                         "4 - Pobierz statystyki graczy (wynik/SOS/ESOS)\n");
     },
     stepTwo: function (msg)
     {
