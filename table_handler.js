@@ -8,7 +8,7 @@ module.exports = {
         var restart = true;
         //Protection against too long message
         //[0] are for headers
-        for(var i = 1 ; i < length; i++)
+        for(var i = 1 ; i < length+1; i++)
         {
             if(restart == true)
             {                
@@ -33,7 +33,7 @@ module.exports = {
             }
             else
             {
-                if(length - 1 != i)
+                if(length != i)
                 {
                     result += this.drawMid(width, maxLength); 
                 } 
